@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package example;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+message TransactionEvent {
+    int64 id = 1;
+    string external_id = 2;
+    int64 org_id = 3;
+    google.protobuf.Struct custom_data = 4;
+    string u21_status = 5;
+
+    google.protobuf.Timestamp event_time = 6;
+
+    string status = 8;
+    double internal_fee = 9;
+    double external_fee = 10;
+
+    double amount = 11;
+    double sent_amount = 13;
+    double received_amount = 14;
+    string sent_currency = 15;
+    string received_currency = 16;
+
+    double exchange_rate = 17;
+    string txn_type = 18;
+
+    int64 receiver_entity_id = 20;
+    int64 sender_entity_id = 21;
+
+    int64 txn_instrument_id = 25;
+}
+
+enum EventType {
+    EVENT_TYPE_UNSPECIFIED = 0;
+    TXN_EVENT = 1;
+    ACTION_EVENT = 2;
+    INTERNAL_EVENT = 3;
+}
+

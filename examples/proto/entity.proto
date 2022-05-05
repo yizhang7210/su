@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package example;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+message Entity {
+    int64 id = 1;
+    string external_id = 2;
+    int64 org_id = 3;
+    google.protobuf.Struct custom_data = 4;
+    string u21_status = 5;
+    string type = 6;
+    string source = 7;
+    string status = 8;
+    google.protobuf.Timestamp registered_at = 9;
+    string family_name = 10;
+    string given_name = 11;
+    Date date_of_birth = 12;
+    Gender gender = 13;
+    string tax_id = 14;
+
+}
+
+
+enum Gender {
+    MALE = 0;
+    FEMALE = 1;
+    OTHER = 2;
+}
+
+message Date {
+    int32 year = 1;
+    int32 month = 2;
+    int32 day = 3;
+}
