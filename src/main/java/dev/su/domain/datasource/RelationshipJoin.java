@@ -4,10 +4,10 @@ import lombok.Value;
 
 @Value(staticConstructor = "of")
 public class RelationshipJoin {
-    private String name;
-    private RelationshipJoinCondition joinCondition;
-    private Cardinality cardinality;
-    private JoinType joinType;
+    String name;
+    RelationshipJoinCondition joinCondition;
+    Cardinality cardinality;
+    JoinType joinType;
 
     public enum Cardinality {
         ONE,
@@ -17,6 +17,16 @@ public class RelationshipJoin {
     public enum JoinType {
         INNER,
         LEFT
+    }
+
+    public String toString() {
+        return joinCondition.getRootObjectName().getValue() +
+                "." +
+                joinCondition.getRootObjectField().getValue() +
+                " = " +
+                joinCondition.getJoinObjectName().getValue() +
+                "." +
+                joinCondition.getJoinObjectField().getValue();
     }
 
 }

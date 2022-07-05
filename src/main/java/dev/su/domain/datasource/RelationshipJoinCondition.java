@@ -6,19 +6,18 @@ import lombok.Value;
 public class RelationshipJoinCondition {
 
     SourceObjectName rootObjectName;
-    SourceObjectField rootObjectField;
+    SourceObjectFieldName rootObjectField;
+    SourceObjectName rootObjectAlias;
 
     SourceObjectName joinObjectName;
-    SourceObjectField joinObjectField;
+    SourceObjectFieldName joinObjectField;
+    SourceObjectName joinObjectAlias;
 
+    // TODO: Make this a recursive boolean formula
     JoinOperator operator;
 
     public enum JoinOperator {
         EQ,
-        LT,
-        LE,
-        GT,
-        GE
     }
 
 }

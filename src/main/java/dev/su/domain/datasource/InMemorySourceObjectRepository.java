@@ -31,6 +31,11 @@ public class InMemorySourceObjectRepository implements SourceObjectRepository {
         return sourceObjectsMap.values();
     }
 
+    @Override
+    public Collection<Relationship> getRelationshipsBySourceObject(SourceObjectName objectName) {
+        return relationshipsMap.getOrDefault(objectName, Set.of());
+    }
+
     public void clearAll() {
         sourceObjectsMap.clear();
         relationshipsMap.clear();

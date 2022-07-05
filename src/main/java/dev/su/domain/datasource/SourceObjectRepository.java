@@ -11,4 +11,6 @@ public interface SourceObjectRepository {
     SourceObjectDefinition getSourceObjectDefinitionByName(SourceObjectName objectName);
 
     Collection<SourceObjectDefinition> getAllSourceObjectDefinitions();
+
+    Collection<Relationship> getRelationshipsBySourceObject(SourceObjectName objectName);
 }
