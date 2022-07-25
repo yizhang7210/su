@@ -1,5 +1,8 @@
-package dev.su.domain.compute;
+package integration;
 
+import dev.su.domain.compute.DataConsumer;
+import dev.su.domain.compute.FeatureComputeTrigger;
+import dev.su.domain.compute.InMemoryFeatureRepository;
 import dev.su.domain.dataflow.InMemoryObjectInstanceRepository;
 import dev.su.domain.datasource.InMemorySourceObjectRepository;
 import dev.su.domain.datasource.SourceObjectDenormalizer;
@@ -11,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 
-public class DataConsumerTest {
+public class DataConsumerIntTest {
 
     private final InMemorySourceObjectRepository sourceObjectRepository = new InMemorySourceObjectRepository();
     private final InMemoryFeatureRepository featureRepository = new InMemoryFeatureRepository();
@@ -32,8 +35,9 @@ public class DataConsumerTest {
     public void setUp() {
         sourceObjectRepository.saveObjectDefinition(TestDataFactory.entityDefinition());
         sourceObjectRepository.saveObjectDefinition(TestDataFactory.transactionDefinition());
+        sourceObjectRepository.saveObjectDefinition(TestDataFactory.addressDefinition());
         sourceObjectRepository.saveRelationshipDefinition(TestDataFactory.entityTransactionRelationship());
-        sourceObjectRepository.saveRelationshipDefinition(TestDataFactory.transactionEntityRelationship());
+        sourceObjectRepository.saveRelationshipDefinition(TestDataFactory.transactionEntityRelationshipWithAddress());
     }
 
     @AfterEach
@@ -57,26 +61,7 @@ public class DataConsumerTest {
         );
 
         // Then
+        // TODO: Verify the persistence of the features instead of method calls
         verify(featureComputeTrigger, times(3));
-
-    }
-
-    @Test
-    void test_features_on_upstream_object_are_computed() {
-
-        // Given
-        featureRepository.save(TestDataFactory.entityFirstNameFeature());
-        featureRepository.save(TestDataFactory.entityLastWeekTransactionCountFeature());
-        featureRepository.save(TestDataFactory.entityLastMonthTransactionVolumeFeature());
-
-        // When
-        dataConsumer.consumeNewRecord(
-                SourceObjectName.of("entity"),
-                TestDataFactory.exampleSenderEntity()
-        );
-
-        // Then
-        verify(featureComputeTrigger, times(3));
-
     }
 }

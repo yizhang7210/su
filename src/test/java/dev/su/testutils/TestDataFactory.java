@@ -77,7 +77,7 @@ public class TestDataFactory {
         );
     }
 
-    public static Relationship transactionEntityRelationship() {
+    public static Relationship transactionEntityRelationshipWithAddress() {
         return Relationship.of(
                 SourceObjectName.of("transaction"),
                 List.of(
@@ -141,6 +141,43 @@ public class TestDataFactory {
         );
     }
 
+    public static Relationship transactionEntityRelationship() {
+        return Relationship.of(
+                SourceObjectName.of("transaction"),
+                List.of(
+                        RelationshipJoin.of(
+                                "sender_join",
+                                RelationshipJoinCondition.of(
+                                        SourceObjectName.of("transaction"),
+                                        SourceObjectFieldName.of("sender_id"),
+                                        SourceObjectName.of("transaction"),
+                                        SourceObjectName.of("entity"),
+                                        SourceObjectFieldName.of("id"),
+                                        SourceObjectName.of("sender_entity"),
+                                        RelationshipJoinCondition.JoinOperator.EQ
+                                ),
+                                RelationshipJoin.Cardinality.ONE,
+                                RelationshipJoin.JoinType.INNER
+                        ),
+                        RelationshipJoin.of(
+                                "receiver_join",
+                                RelationshipJoinCondition.of(
+                                        SourceObjectName.of("transaction"),
+                                        SourceObjectFieldName.of("receiver_id"),
+                                        SourceObjectName.of("transaction"),
+                                        SourceObjectName.of("entity"),
+                                        SourceObjectFieldName.of("id"),
+                                        SourceObjectName.of("receiver_entity"),
+                                        RelationshipJoinCondition.JoinOperator.EQ
+                                ),
+                                RelationshipJoin.Cardinality.ONE,
+                                RelationshipJoin.JoinType.INNER
+                        )
+                )
+        );
+    }
+
+
     public static ObjectInstance exampleSenderEntity() {
         return ObjectInstance.of(
                 ObjectInstanceId.of("entity-123"),
@@ -168,6 +205,22 @@ public class TestDataFactory {
                                 "date_of_birth", "1993-01-01",
                                 "status", "ACTIVE",
                                 "tax_id", "0987654321"
+                        )
+                )
+        );
+    }
+
+    public static ObjectInstance exampleThirdEntity() {
+        return ObjectInstance.of(
+                ObjectInstanceId.of("entity-abc"),
+                objectMapper.valueToTree(
+                        Map.of(
+                                "id", "entity-abc",
+                                "given_name", "Emma",
+                                "family_name", "Thompson",
+                                "date_of_birth", "1980-09-01",
+                                "status", "ACTIVE",
+                                "tax_id", "999888777"
                         )
                 )
         );
@@ -213,7 +266,23 @@ public class TestDataFactory {
                                 "sender_id", "entity-123",
                                 "receiver_id", "entity-789",
                                 "event_time", "2021-12-07 01:23:45",
-                                "status", "ACTIVE"
+                                "status", "COMPLETE"
+                        )
+                )
+        );
+    }
+
+    public static ObjectInstance exampleSecondTransaction() {
+        return ObjectInstance.of(
+                ObjectInstanceId.of("transaction-456"),
+                objectMapper.valueToTree(
+                        Map.of(
+                                "id", "transaction-456",
+                                "amount", 400,
+                                "sender_id", "entity-123",
+                                "receiver_id", "entity-abc",
+                                "event_time", "2022-04-07 01:23:45",
+                                "status", "PENDING"
                         )
                 )
         );
