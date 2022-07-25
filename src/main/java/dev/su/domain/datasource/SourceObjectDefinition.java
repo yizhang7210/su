@@ -29,6 +29,7 @@ public class SourceObjectDefinition {
                 ));
             }
         }
+        this.idFields = idFields;
     }
 
     public Optional<SourceObjectField> getFieldByName(SourceObjectFieldName fieldName) {

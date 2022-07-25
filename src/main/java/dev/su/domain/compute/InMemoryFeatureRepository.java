@@ -4,7 +4,6 @@ import dev.su.domain.datasource.SourceObjectName;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class InMemoryFeatureRepository implements FeatureRepository {
 
@@ -20,18 +19,11 @@ public class InMemoryFeatureRepository implements FeatureRepository {
     }
 
     @Override
-    public Collection<Feature> getAllFeatures() {
-        return featureMap.values().stream().reduce(
-                (featureSet1, featureSet2) -> Stream.concat(
-                        featureSet1.stream(),
-                        featureSet2.stream()
-                ).collect(Collectors.toSet())
-        ).orElse(Set.of());
-    }
-
-    @Override
-    public Collection<Feature> getFeaturesBySourceObject(SourceObjectName sourceObject) {
-        return featureMap.get(sourceObject);
+    public Collection<FeatureName> getFeaturesBySourceObject(SourceObjectName sourceObject) {
+        return featureMap.get(sourceObject)
+                .stream()
+                .map(Feature::getName)
+                .collect(Collectors.toSet());
     }
 
     public void clearAll() {

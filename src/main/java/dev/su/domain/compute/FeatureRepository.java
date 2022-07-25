@@ -8,8 +8,6 @@ public interface FeatureRepository {
 
     void save(Feature feature);
 
-    Collection<Feature> getAllFeatures();
-
-    Collection<Feature> getFeaturesBySourceObject(SourceObjectName sourceObject);
+    Collection<FeatureName> getFeaturesBySourceObject(SourceObjectName sourceObject);
 
 }

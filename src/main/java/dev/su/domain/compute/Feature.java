@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Value
 public class Feature {
-    String name;
+    FeatureName name;
     SourceObjectName rootObject;
     FeatureDefinition definition;
 }

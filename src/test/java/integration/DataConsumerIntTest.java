@@ -1,7 +1,7 @@
 package integration;
 
 import dev.su.domain.compute.DataConsumer;
-import dev.su.domain.compute.FeatureComputeTrigger;
+import dev.su.domain.compute.FeatureCalculator;
 import dev.su.domain.compute.InMemoryFeatureRepository;
 import dev.su.domain.dataflow.InMemoryObjectInstanceRepository;
 import dev.su.domain.datasource.InMemorySourceObjectRepository;
@@ -21,13 +21,13 @@ public class DataConsumerIntTest {
     private final InMemoryObjectInstanceRepository objectInstanceRepository = new InMemoryObjectInstanceRepository();
     private final SourceObjectDenormalizer sourceObjectDenormalizer = new SourceObjectDenormalizer(sourceObjectRepository);
 
-    private final FeatureComputeTrigger featureComputeTrigger = mock(FeatureComputeTrigger.class);
+    private final FeatureCalculator featureCalculator = mock(FeatureCalculator.class);
 
     private final DataConsumer dataConsumer = new DataConsumer(
             sourceObjectRepository,
             featureRepository,
             objectInstanceRepository,
-            featureComputeTrigger,
+            featureCalculator,
             sourceObjectDenormalizer
     );
 
@@ -62,6 +62,6 @@ public class DataConsumerIntTest {
 
         // Then
         // TODO: Verify the persistence of the features instead of method calls
-        verify(featureComputeTrigger, times(3));
+        verify(featureCalculator, times(3));
     }
 }

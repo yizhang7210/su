@@ -16,7 +16,7 @@ public class DataConsumer {
     private final SourceObjectRepository sourceObjectRepository;
     private final FeatureRepository featureRepository;
     private final ObjectInstanceRepository objectInstanceRepository;
-    private final FeatureComputeTrigger computeTrigger;
+    private final FeatureCalculator featureCalculator;
     private final SourceObjectDenormalizer sourceObjectDenormalizer;
 
     public void consumeNewRecord(SourceObjectName objectName, ObjectInstance objectInstance) {
@@ -26,7 +26,7 @@ public class DataConsumer {
         // Part 1: Trigger calculation of features of this new object
         featureRepository.getFeaturesBySourceObject(objectName)
                 .forEach(
-                        feature -> computeTrigger.triggerCalculate(feature, objectInstance.getInstanceId())
+                        feature -> featureCalculator.calculateFeature(feature, objectInstance.getInstanceId())
                 );
 
         // Part 2: Trigger calculation of features for objects that are affected by the update
@@ -50,7 +50,7 @@ public class DataConsumer {
                                 .forEach(objectId ->
                                         featureRepository.getFeaturesBySourceObject(rootObjectName)
                                                 .forEach(feature ->
-                                                        computeTrigger.triggerCalculate(feature, objectId))
+                                                        featureCalculator.calculateFeature(feature, objectId))
                                 )
                 );
 

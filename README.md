@@ -11,5 +11,16 @@
 
 Any other alternatives in getting Java 17 is acceptable (e.g. `sdkman`)
 
-### Get Protobuf
-1. `brew install protobuf`
+### Configuration Options
+
+### Customer facing options
+1. Object Ingestion Mechanism
+1. Feature Result Storage (implement `FeatureResultRepository`)
+
+### System (internal) configuration options
+1. Source Object Definition Storage (implement `SourceObjectRepository`)
+1. Object Instance Storage (implement `ObjectInstanceRepository`)
+1. Feature Definition Storage (implement `FeatureRepository`)
+1. Feature Calculator (implement `FeatureCalculator`)
+
+

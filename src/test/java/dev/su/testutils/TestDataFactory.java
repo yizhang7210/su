@@ -3,6 +3,7 @@ package dev.su.testutils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.su.domain.compute.Feature;
 import dev.su.domain.compute.FeatureDefinition;
+import dev.su.domain.compute.FeatureName;
 import dev.su.domain.dataflow.ObjectInstance;
 import dev.su.domain.dataflow.ObjectInstanceId;
 import dev.su.domain.datasource.*;
@@ -290,7 +291,7 @@ public class TestDataFactory {
 
     public static Feature entityFirstNameFeature() {
         return new Feature(
-                "entity-first-name",
+                FeatureName.of("entity-first-name"),
                 SourceObjectName.of("entity"),
                 FeatureDefinition.of()
         );
@@ -298,7 +299,7 @@ public class TestDataFactory {
 
     public static Feature entityLastWeekTransactionCountFeature() {
         return new Feature(
-                "entity-last-week-transaction-count",
+                FeatureName.of("entity-last-week-transaction-count"),
                 SourceObjectName.of("entity"),
                 FeatureDefinition.of()
         );
@@ -306,7 +307,7 @@ public class TestDataFactory {
 
     public static Feature entityLastMonthTransactionVolumeFeature() {
         return new Feature(
-                "entity-last-month-transaction-volume",
+                FeatureName.of("entity-last-month-transaction-volume"),
                 SourceObjectName.of("entity"),
                 FeatureDefinition.of()
         );
