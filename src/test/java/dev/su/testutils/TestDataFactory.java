@@ -58,6 +58,7 @@ public class TestDataFactory {
 
     public static Relationship entityTransactionRelationship() {
         return Relationship.of(
+                RelationshipName.of("denormalized_entity"),
                 SourceObjectName.of("entity"),
                 List.of(
                         RelationshipJoin.of(
@@ -80,6 +81,7 @@ public class TestDataFactory {
 
     public static Relationship transactionEntityRelationshipWithAddress() {
         return Relationship.of(
+                RelationshipName.of("denormalized_transaction_with_entity_address"),
                 SourceObjectName.of("transaction"),
                 List.of(
                         RelationshipJoin.of(
@@ -144,6 +146,7 @@ public class TestDataFactory {
 
     public static Relationship transactionEntityRelationship() {
         return Relationship.of(
+                RelationshipName.of("denormalized_transaction"),
                 SourceObjectName.of("transaction"),
                 List.of(
                         RelationshipJoin.of(

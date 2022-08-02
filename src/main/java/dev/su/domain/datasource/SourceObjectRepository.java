@@ -6,11 +6,14 @@ public interface SourceObjectRepository {
 
     void saveObjectDefinition(SourceObjectDefinition objectDefinition);
 
-    void saveRelationshipDefinition(Relationship relationship);
-
     SourceObjectDefinition getSourceObjectDefinitionByName(SourceObjectName objectName);
 
     Collection<SourceObjectDefinition> getAllSourceObjectDefinitions();
 
+    void saveRelationshipDefinition(Relationship relationship);
+
+    Relationship getRelationshipByName(RelationshipName relationshipName);
+
     Collection<Relationship> getRelationshipsBySourceObject(SourceObjectName objectName);
+
 }

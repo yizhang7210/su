@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data(staticConstructor = "of")
 public class Relationship {
+    private final RelationshipName name;
     private final SourceObjectName rootObject;
 
     // TODO: Check name uniqueness

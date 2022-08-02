@@ -1,11 +1,12 @@
 package dev.su.domain.datasource;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InMemorySourceObjectRepository implements SourceObjectRepository {
 
     private final Map<SourceObjectName, SourceObjectDefinition> sourceObjectsMap = new HashMap<>();
-    private final Map<SourceObjectName, Set<Relationship>> relationshipsMap = new HashMap<>();
+    private final Map<RelationshipName, Relationship> relationshipsMap = new HashMap<>();
 
     @Override
     public void saveObjectDefinition(SourceObjectDefinition objectDefinition) {
@@ -14,11 +15,12 @@ public class InMemorySourceObjectRepository implements SourceObjectRepository {
 
     @Override
     public void saveRelationshipDefinition(Relationship relationship) {
-        if (!relationshipsMap.containsKey(relationship.getRootObject())) {
-            relationshipsMap.put(relationship.getRootObject(), new HashSet<>());
-        }
+        relationshipsMap.put(relationship.getName(), relationship);
+    }
 
-        relationshipsMap.get(relationship.getRootObject()).add(relationship);
+    @Override
+    public Relationship getRelationshipByName(RelationshipName relationshipName) {
+        return relationshipsMap.get(relationshipName);
     }
 
     @Override
@@ -33,7 +35,10 @@ public class InMemorySourceObjectRepository implements SourceObjectRepository {
 
     @Override
     public Collection<Relationship> getRelationshipsBySourceObject(SourceObjectName objectName) {
-        return relationshipsMap.getOrDefault(objectName, Set.of());
+        return relationshipsMap.values()
+                .stream()
+                .filter(relationship -> relationship.getRootObject().equals(objectName))
+                .collect(Collectors.toList());
     }
 
     public void clearAll() {
